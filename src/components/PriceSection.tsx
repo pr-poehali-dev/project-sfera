@@ -1,4 +1,8 @@
+import { useState } from "react"
 import Icon from "@/components/ui/icon"
+
+const PHONE = "89930474707"
+const PHONE_DISPLAY = "+7 993 047-47-07"
 
 const services = [
   {
@@ -32,6 +36,8 @@ const services = [
 ]
 
 export default function PriceSection() {
+  const [selected, setSelected] = useState<string | null>(null)
+
   return (
     <section id="services" className="bg-black py-24 px-6">
       <div className="max-w-5xl mx-auto">
@@ -62,7 +68,10 @@ export default function PriceSection() {
               </div>
               <div className="flex items-center justify-between mt-auto">
                 <p className="text-white text-2xl font-light">{service.price}</p>
-                <button className="px-5 py-2 rounded-full border border-white/20 text-white text-xs font-normal hover:bg-white hover:text-black transition-all duration-200 cursor-pointer">
+                <button
+                  onClick={() => setSelected(service.title)}
+                  className="px-5 py-2 rounded-full border border-white/20 text-white text-xs font-normal hover:bg-white hover:text-black transition-all duration-200 cursor-pointer"
+                >
                   Записаться
                 </button>
               </div>
@@ -74,6 +83,42 @@ export default function PriceSection() {
           Точная стоимость определяется на бесплатной консультации
         </p>
       </div>
+
+      {/* Modal */}
+      {selected && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4"
+          onClick={() => setSelected(null)}
+        >
+          <div
+            className="bg-neutral-950 border border-white/10 rounded-2xl p-8 max-w-sm w-full relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelected(null)}
+              className="absolute top-4 right-4 text-white/30 hover:text-white transition-colors cursor-pointer"
+            >
+              <Icon name="X" size={18} />
+            </button>
+
+            <p className="text-white/40 uppercase text-[10px] tracking-widest mb-1">Запись на приём</p>
+            <h3 className="text-white text-xl font-medium mb-6">{selected}</h3>
+
+            <p className="text-white/50 text-sm mb-3">Позвоните нам, чтобы записаться:</p>
+            <a
+              href={`tel:${PHONE}`}
+              className="flex items-center gap-3 w-full px-5 py-4 rounded-xl bg-white text-black font-medium text-sm hover:bg-white/90 transition-colors"
+            >
+              <Icon name="Phone" size={18} />
+              {PHONE_DISPLAY}
+            </a>
+
+            <p className="text-white/20 text-xs mt-4 text-center">
+              Уфа, ул. 50 лет СССР, 34 · 19 этаж, офис 146
+            </p>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
