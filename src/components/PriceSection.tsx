@@ -60,7 +60,12 @@ export default function PriceSection() {
                 <h3 className="text-white font-medium text-lg mb-1">{service.title}</h3>
                 <p className="text-white/40 text-sm font-light">{service.description}</p>
               </div>
-              <p className="text-white text-2xl font-light mt-auto">{service.price}</p>
+              <div className="flex items-center justify-between mt-auto">
+                <p className="text-white text-2xl font-light">{service.price}</p>
+                <button className="px-5 py-2 rounded-full border border-white/20 text-white text-xs font-normal hover:bg-white hover:text-black transition-all duration-200 cursor-pointer">
+                  Записаться
+                </button>
+              </div>
             </div>
           ))}
         </div>
